@@ -46,6 +46,8 @@ cat > $wineprefix_path/synth_v_login.sh <<EOF
 WINEPREFIX=$wineprefix_path wine "C:\\Program Files\\Synthesizer V Studio 2 Pro\\synthv-studio.exe" "\$1"
 EOF
 
+chmod +x $wineprefix_path/synth_v_login.sh
+
 # Cleanup downloads
 rm MicrosoftEdgeWebview2Setup.exe
 rm svstudio2-pro-setup-latest.exe
