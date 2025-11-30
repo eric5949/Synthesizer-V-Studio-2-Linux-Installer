@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "Starting Synthesizer V Studio 2 Pro Linux Installer.  For VST support, wine 9.21 staging is recommended."
+echo "Starting Synthesizer V Studio 2 Pro Linux Installer.  For VST support, wine 9.21 staging is recommended for yabridge."
 
 # Checking if everything we need is installed
 if ! [ -x "$(command -v wine)" ]; then
@@ -11,7 +11,7 @@ if ! [ -x "$(command -v winetricks)" ]; then
   exit 1
 fi
 if ! [ -x "$(command -v yabridgectl)" ]; then
-  echo 'Error: Yabridgectl is not installed, vst support wont work.' >&2
+  echo "Yabridgectl is not installed, vst support won't work." >&2
 fi
 echo 'Passed dependency checks'
 
@@ -25,7 +25,6 @@ if [ ! -d "$wineprefix_path" ]; then
     echo "Error: Could not create $wineprefix_path." >&2
     exit 1
 fi
-
 
 # Download Edge Webview and SV2
 curl -L -o MicrosoftEdgeWebview2Setup.exe https://go.microsoft.com/fwlink/p/?LinkId=2124703
@@ -47,29 +46,20 @@ cat > $wineprefix_path/synth_v_login.sh <<EOF
 WINEPREFIX=$wineprefix_path wine "C:\\Program Files\\Synthesizer V Studio 2 Pro\\synthv-studio.exe" "\$1"
 EOF
 
-chmod +x $wineprefix_path/synth_v_login.sh
-echo "Writing Desktop Entry..."
-cat > ~/.local/share/applications/synthv.desktop <<EOF
-[Desktop Entry]
-Name=Synthesizer V Studio 2 Pro
-Exec=$wineprefix_path/synth_v_login.sh %f
-Icon=$wineprefix_path/drive_c/sv-studio-icon.png
-MimeType=x-scheme-handler/dreamtonics-svstudio2;
-Type=Application
-Categories=AudioVideo;
-EOF
+# Cleanup downloads
+rm MicrosoftEdgeWebview2Setup.exe
+rm svstudio2-pro-setup-latest.exe
 
 # Converting VST for Linux
 yabridgectl add $wineprefix_path/drive_c/Program\ Files/Common\ Files/VST3/ > /dev/null 2>&1 | echo "Converting VST for Linux..."
 yabridgectl sync > /dev/null 2>&1
 
 echo ""
-echo "Trickiest part, you should have a working installation right now, when you click log in, your browser will ask you what application to open the link with.  A script called synth_v_login.sh has been created in your wineprefix, tell your browser to use this script."
+echo "When you click log in, your browser will ask you what application to open the link with.  A script called synth_v_login.sh has been created in your wineprefix, tell your browser to use this script."
 sleep 5
 echo ""
 echo "Launching Synthesizer V Studio 2 Pro..."
 WINEPREFIX="$wineprefix_path" wine "C:\Program Files\Synthesizer V Studio 2 Pro\synthv-studio.exe" > /dev/null 2>&1
-
 echo ""
-echo "Completed, you may use Synthesizer V Studio 2 Pro standalone or the VST might work in your DAW of choice, it should be in your VST3 folder."
+echo "Completed, you may use Synthesizer V Studio 2 Pro standalone or the VST might work in your DAW of choice, it should be in your VST3 folder if you had yabridgectl installed."
 exit 0
