@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 echo "Starting Synthesizer V Studio 2 Pro Linux Installer.  For VST support, wine 9.21 staging is recommended for yabridge."
 
 # Checking if everything we need is installed
