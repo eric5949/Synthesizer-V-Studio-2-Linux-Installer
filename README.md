@@ -6,11 +6,11 @@
 
 
 *Bash* 
-```
+```bash
 bash <(curl -s https://raw.githubusercontent.com/eric5949/Synthesizer-V-Studio-2-Linux-Installer/refs/heads/main/sv2linuxinstaller.sh)
 ```
 
 *Fish* (because I use fish and fish is wierd)
-```
+```fish
 bash (curl -s https://raw.githubusercontent.com/eric5949/Synthesizer-V-Studio-2-Linux-Installer/refs/heads/main/sv2linuxinstaller.sh | psub)
 ```
