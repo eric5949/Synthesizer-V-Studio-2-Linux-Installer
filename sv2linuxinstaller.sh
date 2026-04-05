@@ -10,6 +10,10 @@ if ! [ -x "$(command -v winetricks)" ]; then
   echo 'Error: Winetricks is not installed.' >&2
   exit 1
 fi
+if ! ls /usr/share/vulkan/icd.d/ 1>/dev/null 2>&1 ; then
+  echo 'Error: No Vulkan installation.' >&2
+  exit 1
+fi
 if ! [ -x "$(command -v yabridgectl)" ]; then
   echo "Yabridgectl is not installed, vst support won't work." >&2
 fi
